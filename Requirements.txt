@@ -2,3 +2,4 @@ streamlit
 pillow
 random
 streamlit==1.22
+streamlit_gsheets
