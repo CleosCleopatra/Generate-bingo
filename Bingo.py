@@ -47,7 +47,7 @@ while st.session_state.more_info_opened:
     remove = []
     for i, text in enumerate(st.session_state.possible_text.copy()):
         st.write(text)
-        if st.button(f"Remove {text}", key = f"remove_{i}"):
+        if st.button(f"Remove {text}"):
             remove.append(text)
     if st.button("Close info"):
         for rem in remove:
