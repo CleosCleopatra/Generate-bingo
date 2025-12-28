@@ -2,10 +2,11 @@ import streamlit as st
 import random
 from PIL import Image, ImageDraw
 import uuid
+from streamlit_gsheets import GSheetsConnection
 
 st.write(st.secrets)
 
-conn = st.connection("gsheets")
+conn = st.connection("gsheets", type = GSheetsConnection)
 df = conn.read()
 st.write(df)
 
