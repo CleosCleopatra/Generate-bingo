@@ -9,9 +9,12 @@ st.title("Bingo maker")
 
 st.title("Bingo Card Generator")
 
-if st.session_state.new_text:
-    st.session_state.possible_text.append(st.session_state.new_text)
-    st.session_state.new_text = ""
+def add_the_text():
+    if st.session_state.new_text:
+        st.session_state.possible_text.append(st.session_state.new_text)
+        st.session_state.new_text = ""
+
+st.text_input("What could happen?", key = "new_text", on_change=add_the_text)
 
 line_points = [[(0, 100), (500, 100)], [(0, 200), (500, 200)], [(0,300), (500, 300)], [(0, 400), (500, 400)], [(100, 0), (100, 500)], [(200, 0), (200, 500)], [(300, 1), (333.3333333333333, 500)], [(400, 0), (400, 500)]]
 text_positions = [(50, 50), (150, 50), (250, 50), (350, 50), (450, 50), (50, 150), (150, 150), (250, 150), (350, 150), (450, 150), (50, 250), (150, 250), (250, 250), (350, 250), (450, 250), (50, 350), (150, 350), (250, 350), (350, 350), (450, 350), (50, 450), (150, 450), (250, 450), (350, 450), (450, 450)]
