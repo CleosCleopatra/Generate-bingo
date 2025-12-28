@@ -1,3 +1,4 @@
 streamlit
 pillow
 random
+streamlit==1.22

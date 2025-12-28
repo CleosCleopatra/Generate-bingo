@@ -7,7 +7,7 @@ from streamlit_gsheets import GSheetsConnection
 st.write(st.secrets)
 
 conn = st.connection("gsheets", type = GSheetsConnection)
-df = conn.read()
+df = conn.read(worksheet="Sheet1")
 st.write(df)
 
 
