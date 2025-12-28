@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import uuid
 from textwrap import wrap
 
-max_size = 70
+max_size = 70*5
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
@@ -23,8 +23,8 @@ def get_text_part(text, max_width, font):
         
     return '\n'.join(lines)
 
-size_min = 12
-size_max = 22
+size_min = 12*5
+size_max = 22*5
 def get_wrapped_text(text, max_width):
     for size in range(size_max, size_min -1, -1):
         font = ImageFont.truetype("DejaVuSans.ttf", size)
@@ -46,8 +46,13 @@ def add_the_text():
 
 st.text_input("What could happen?", key = "new_text", on_change=add_the_text)
 
-line_points = [[(0, 100), (500, 100)], [(0, 200), (500, 200)], [(0,300), (500, 300)], [(0, 400), (500, 400)], [(100, 0), (100, 500)], [(200, 0), (200, 500)], [(300, 1), (300, 500)], [(400, 0), (400, 500)]]
-text_positions = [(5, 5), (105, 5), (205, 5), (305, 5), (405, 5), (5, 105), (105, 105), (205, 105), (305, 105), (405, 105), (5, 205), (105, 205), (205, 205), (305, 205), (405, 205), (5, 305), (105, 305), (205, 305), (305, 305), (405, 305), (5, 405), (105, 405), (205, 405), (305, 405), (405, 405)]
+line_points = [[(0, 500), (2500, 500)], [(0, 1000), (2500, 1000)], [(0,1500), (2500, 1500)], [(0, 2000), (2500, 2000)], [(500, 0), (500, 2500)], [(1000, 0), (1000, 2500)], [(1500, 0), (1500, 2500)], [(2000, 0), (2000, 2500)]]
+text_positions = []
+
+for x in range(5):
+    for y in range(5):
+        text_positions.append((x*500+5,y*500+5))
+#text_positions = [(5, 5), (105, 5), (205, 5), (305, 5), (405, 5), (5, 105), (105, 105), (205, 105), (305, 105), (405, 105), (5, 205), (105, 205), (205, 205), (305, 205), (405, 205), (5, 305), (105, 305), (205, 305), (305, 305), (405, 305), (5, 405), (105, 405), (205, 405), (305, 405), (405, 405)]
 
 if st.button("Generate Bingo Card"):
     if len(st.session_state.possible_text) < 25:
@@ -55,11 +60,11 @@ if st.button("Generate Bingo Card"):
     else:
         bingo_card_items = random.sample(st.session_state.possible_text, 25)
         
-        w, h = 500, 500
+        w, h = 2500, 2500
         img = Image.new("RGB", (w, h))
 
         img1 = ImageDraw.Draw(img)
-        img1.rectangle([(0,0), (500, 500)], fill = "white")
+        img1.rectangle([(0,0), (2500, 2500)], fill = "white")
         for lines in line_points:
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
