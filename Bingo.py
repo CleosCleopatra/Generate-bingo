@@ -52,9 +52,9 @@ if st.session_state.more_info_opened:
     for text in st.session_state.possible_text.copy():
         st.write(text["text"])
         if st.button(f"Remove {text['text']}", key = f"remove{text['id']}"):
-            st.session_state.remove.append(text["id"])
+            st.session_state.remove_list.append(text["id"])
     if st.button("Close info"):
         for i in st.session_state.possible_text.copy():
-            if i["id"] in st.session_state.remove:
+            if i["id"] in st.session_state.remove_list:
                 st.session_state.possible_text.remove(i)
         st.session_state.more_info_opened = False
