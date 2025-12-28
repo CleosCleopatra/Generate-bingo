@@ -1,6 +1,8 @@
 import streamlit as st
 import random
 from PIL import Image, ImageDraw
+import uuid
+
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
@@ -11,7 +13,7 @@ st.title("Bingo Card Generator")
 
 def add_the_text():
     if st.session_state.new_text:
-        st.session_state.possible_text.append(st.session_state.new_text)
+        st.session_state.possible_text.append({"id": str(uuid.uuid4()), "text": st.session_state.new_text})
         st.session_state.new_text = ""
 
 st.text_input("What could happen?", key = "new_text", on_change=add_the_text)
@@ -45,11 +47,12 @@ if st.button("More info"):
     st.session_state.more_info_opened = True
 while st.session_state.more_info_opened:
     remove = []
-    for i, text in enumerate(st.session_state.possible_text.copy()):
-        st.write(text)
-        if st.button(f"Remove {text}"):
-            remove.append(text)
+    for text in st.session_state.possible_text.copy():
+        st.write(text["text"])
+        if st.button(f"Remove {text["text"]}", key = f"remove{text['id']}"):
+            remove.append(text["id"])
     if st.button("Close info"):
-        for rem in remove:
-            st.session_state.possible_text.remove(rem)
-            st.session_state.more_info_opened = False
+        for i in st.session_state.possible_text:
+            if i["id"] in remove:
+                st.session_state.possible_text.remove(i)
+        st.session_state.more_info_opened = False
