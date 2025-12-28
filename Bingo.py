@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 from PIL import Image, ImageDraw
-import keyboard
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
