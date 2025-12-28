@@ -49,8 +49,8 @@ if st.button("Generate Bingo Card"):
         for lines in line_points:
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
-            wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_width = 48, font = font)
-            img1.multiline_text(text_positions[i], wrapped, fill = "black", font = font)
+            wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_width = 60, font = font)
+            img1.multiline_text((text_positions[i][0]+10, text_positions[i][1]+10), wrapped, fill = "black", font = font)
 
         
         st.image(img, width = 500)
