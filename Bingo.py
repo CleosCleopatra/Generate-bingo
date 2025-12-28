@@ -43,5 +43,5 @@ if st.button("More info"):
     for i, text in enumerate(st.session_state.possible_text.copy()):
         st.write(text)
         if st.button(f"Remove {text}", key = f"remove_{i}"):
-            st.session_state.possible_text.pop(i)
+            st.session_state.possible_text.remove(text)
             st.experimental_rerun()
