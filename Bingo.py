@@ -4,8 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import uuid
 from textwrap import wrap
 
-font = ImageFont.load_default()
-
+max_size = 70
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
@@ -14,7 +13,7 @@ st.title("Bingo maker")
 
 st.title("Bingo Card Generator")
 
-def get_wrapped_text(text, max_width, font=font):
+def get_text_part(text, max_width, font):
     lines = ['']
     for word in text.split():
         line  = f'{lines[-1]} {word}'.strip()
@@ -24,6 +23,22 @@ def get_wrapped_text(text, max_width, font=font):
             lines.append(word)
         
     return '\n'.join(lines)
+
+size_min = 12
+size_max = 22
+def get_wrapped_text(text, max_width):
+    for size in range(size_max, size_min -1, -1):
+        font = ImageFont.truetype("DejaVuSans.ttf", size)
+        text = get_text_part(text, max_width, font)
+
+        different_lines = text.split('\n')
+        line_height = font.getbbox('A')[3]
+
+        tot_height = line_height * len(different_lines)
+        if tot_height <= max_size:
+            return text, font
+    return text, font
+
 
 def add_the_text():
     if st.session_state.new_text:
@@ -49,7 +64,7 @@ if st.button("Generate Bingo Card"):
         for lines in line_points:
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
-            wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_width = 60, font = font)
+            font, wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_size)
             img1.multiline_text((text_positions[i][0]+10, text_positions[i][1]+10), wrapped, fill = "black", font = font)
 
         
