@@ -26,6 +26,7 @@ if st.button("Generate Bingo Card"):
         img = Image.new("RGB", (w, h))
 
         img1 = ImageDraw.Draw(img)
+        img1.rectange([(0,0), (500, 500)], fill = "white")
         for line in line_points:
             img1.line(line, fill = "black", width = 10)
         for i in range(25):
