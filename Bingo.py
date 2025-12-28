@@ -43,16 +43,18 @@ if st.button("Generate Bingo Card"):
 if "more_info_opened" not in st.session_state:
     st.session_state.more_info_opened = False
 
+if "remove_list" not in st.session_state:
+    st.session_state.remove_list = []
+
 if st.button("More info"):
     st.session_state.more_info_opened = True
 if st.session_state.more_info_opened:
-    remove = []
     for text in st.session_state.possible_text.copy():
         st.write(text["text"])
         if st.button(f"Remove {text['text']}", key = f"remove{text['id']}"):
-            remove.append(text["id"])
+            st.session_state.remove.append(text["id"])
     if st.button("Close info"):
-        for i in st.session_state.possible_text:
-            if i["id"] in remove:
+        for i in st.session_state.possible_text.copy():
+            if i["id"] in st.session_state.remove:
                 st.session_state.possible_text.remove(i)
         st.session_state.more_info_opened = False
