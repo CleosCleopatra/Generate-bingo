@@ -9,7 +9,6 @@ max_size = 70
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
 
-st.title("Bingo maker")
 
 st.title("Bingo Card Generator")
 
@@ -64,7 +63,7 @@ if st.button("Generate Bingo Card"):
         for lines in line_points:
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
-            font, wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_size)
+            wrapped, font = get_wrapped_text(bingo_card_items[i]["text"], max_size)
             img1.multiline_text((text_positions[i][0]+10, text_positions[i][1]+10), wrapped, fill = "black", font = font)
 
         
