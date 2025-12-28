@@ -40,8 +40,8 @@ if st.button("Generate Bingo Card"):
 
 if st.button("More info"):
     remove = []
-    for text in st.session_state.possible_text.copy():
+    for i, text in enumerate(st.session_state.possible_text.copy()):
         st.write(text)
-        if st.button(f"Remove {text}", key = f"remove_{text}"):
-            st.session_state.possible_text.remove(text)
+        if st.button(f"Remove {text}", key = f"remove_{i}"):
+            st.session_state.possible_text.pop(i)
             st.experimental_rerun()
