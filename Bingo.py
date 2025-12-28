@@ -2,12 +2,16 @@ import streamlit as st
 import random
 from PIL import Image, ImageDraw
 import uuid
+from streamlit_gsheets import GDsheetsConnection
 
+conn = st.connection("gsheets", type = GSheetsConnection)
+
+st.session_state.possible_text = conn.read()
 
 if "possible_text" not in st.session_state:
-    st.session_state.possible_text = []
+    df = conn.read()
+    st.session_state.possible_text = df.to_dict("records") if df is not None else []
 
-st.title("Bingo maker")
 
 st.title("Bingo Card Generator")
 
@@ -15,6 +19,7 @@ def add_the_text():
     if st.session_state.new_text:
         st.session_state.possible_text.append({"id": str(uuid.uuid4()), "text": st.session_state.new_text})
         st.session_state.new_text = ""
+        conn.write(st.session_state.possible_text)
 
 st.text_input("What could happen?", key = "new_text", on_change=add_the_text)
 
@@ -48,6 +53,7 @@ if "remove_list" not in st.session_state:
 
 if st.button("More info"):
     st.session_state.more_info_opened = True
+
 if st.session_state.more_info_opened:
     for text in st.session_state.possible_text.copy():
         st.write(text["text"])
@@ -58,3 +64,5 @@ if st.session_state.more_info_opened:
             if i["id"] in st.session_state.remove_list:
                 st.session_state.possible_text.remove(i)
         st.session_state.more_info_opened = False
+
+        conn.write(st.session_state.possible_text)
