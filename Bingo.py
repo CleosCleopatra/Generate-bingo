@@ -4,6 +4,8 @@ from PIL import Image, ImageDraw
 import uuid
 #from streamlit_gsheets import GSheetsConnection
 
+st.write(st.secrets)
+
 conn = st.connection("gsheets")
 
 
