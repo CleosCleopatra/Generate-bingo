@@ -2,9 +2,10 @@ import streamlit as st
 import random
 from PIL import Image, ImageDraw
 import uuid
-from streamlit_gsheets import GDsheetsConnection
+#from streamlit_gsheets import GSheetsConnection
 
-conn = st.connection("gsheets", type = GSheetsConnection)
+conn = st.connection("gsheets")
+
 
 st.session_state.possible_text = conn.read()
 
