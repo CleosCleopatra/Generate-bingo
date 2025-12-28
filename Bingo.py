@@ -36,3 +36,12 @@ if st.button("Generate Bingo Card"):
             img1.text(text_positions[i], bingo_card_items[i], fill = "black")
         
         st.image(img, width = 500)
+
+
+if st.button("More info"):
+    remove = []
+    for text in st.session_state.possible_text.copy():
+        st.write(text)
+        if st.button(f"Remove {text}", key = f"remove_{text}"):
+            st.session_state.possible_text.remove(text)
+            st.experimental_rerun()
