@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import uuid
 from textwrap import wrap
 
-max_size = 70*5
+max_size = 70*5+10
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
@@ -23,7 +23,7 @@ def get_text_part(text, max_width, font):
         
     return '\n'.join(lines)
 
-size_min = 12*5
+size_min = 11*5
 size_max = 22*5
 def get_wrapped_text(text, max_width):
     for size in range(size_max, size_min -1, -1):
