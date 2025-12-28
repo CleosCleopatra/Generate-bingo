@@ -2,11 +2,12 @@ import streamlit as st
 import random
 from PIL import Image, ImageDraw
 import uuid
-#from streamlit_gsheets import GSheetsConnection
 
 st.write(st.secrets)
 
 conn = st.connection("gsheets")
+df = conn.read()
+st.write(df)
 
 
 st.session_state.possible_text = conn.read()
