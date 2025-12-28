@@ -4,7 +4,6 @@ from PIL import Image, ImageDraw
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
-possible_text = []
 
 st.title("Bingo maker")
 
