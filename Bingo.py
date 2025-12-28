@@ -50,7 +50,7 @@ if st.button("Generate Bingo Card"):
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
             wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_width = 48, font = font)
-            img1.multiline_text(text_positions[i], wrapped, fill = "black", max_width = 48, max_height = 48)
+            img1.multiline_text(text_positions[i], wrapped, fill = "black", font = font)
 
         
         st.image(img, width = 500)
@@ -74,3 +74,5 @@ if st.session_state.more_info_opened:
             if i["id"] in st.session_state.remove_list:
                 st.session_state.possible_text.remove(i)
         st.session_state.more_info_opened = False
+
+
