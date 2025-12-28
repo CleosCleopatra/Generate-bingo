@@ -35,7 +35,7 @@ if st.button("Generate Bingo Card"):
         for line in line_points:
             img1.line(line, fill = "black", width = 10)
         for i in range(25):
-            img1.text(text_positions[i], bingo_card_items[i], fill = "black")
+            img1.text(text_positions[i], bingo_card_items[i]["text"], fill = "black")
         
         st.image(img, width = 500)
 
@@ -45,11 +45,11 @@ if "more_info_opened" not in st.session_state:
 
 if st.button("More info"):
     st.session_state.more_info_opened = True
-while st.session_state.more_info_opened:
+if st.session_state.more_info_opened:
     remove = []
     for text in st.session_state.possible_text.copy():
         st.write(text["text"])
-        if st.button(f"Remove {text["text"]}", key = f"remove{text['id']}"):
+        if st.button(f"Remove {text['text']}", key = f"remove{text['id']}"):
             remove.append(text["id"])
     if st.button("Close info"):
         for i in st.session_state.possible_text:
