@@ -1,7 +1,10 @@
 import streamlit as st
 import random
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import uuid
+from textwrap import wrap
+
+font = ImageFont.load_default()
 
 
 if "possible_text" not in st.session_state:
@@ -11,6 +14,17 @@ st.title("Bingo maker")
 
 st.title("Bingo Card Generator")
 
+def get_wrapped_text(text, max_width, font=font):
+    lines = ['']
+    for word in text.split():
+        line  = f'{lines[-1]} {word}'.strip()
+        if font.getlength(line) <= max_width:
+            lines[-1] = line
+        else: 
+            lines.append(word)
+        
+    return '\n'.join(lines)
+
 def add_the_text():
     if st.session_state.new_text:
         st.session_state.possible_text.append({"id": str(uuid.uuid4()), "text": st.session_state.new_text})
@@ -19,7 +33,7 @@ def add_the_text():
 st.text_input("What could happen?", key = "new_text", on_change=add_the_text)
 
 line_points = [[(0, 100), (500, 100)], [(0, 200), (500, 200)], [(0,300), (500, 300)], [(0, 400), (500, 400)], [(100, 0), (100, 500)], [(200, 0), (200, 500)], [(300, 1), (300, 500)], [(400, 0), (400, 500)]]
-text_positions = [(50, 50), (150, 50), (250, 50), (350, 50), (450, 50), (50, 150), (150, 150), (250, 150), (350, 150), (450, 150), (50, 250), (150, 250), (250, 250), (350, 250), (450, 250), (50, 350), (150, 350), (250, 350), (350, 350), (450, 350), (50, 450), (150, 450), (250, 450), (350, 450), (450, 450)]
+text_positions = [(5, 5), (105, 5), (205, 5), (305, 5), (405, 5), (5, 105), (105, 105), (205, 105), (305, 105), (405, 105), (5, 205), (105, 205), (205, 205), (305, 205), (405, 205), (5, 305), (105, 305), (205, 305), (305, 305), (405, 305), (5, 405), (105, 405), (205, 405), (305, 405), (405, 405)]
 
 if st.button("Generate Bingo Card"):
     if len(st.session_state.possible_text) < 25:
@@ -32,10 +46,12 @@ if st.button("Generate Bingo Card"):
 
         img1 = ImageDraw.Draw(img)
         img1.rectangle([(0,0), (500, 500)], fill = "white")
-        for line in line_points:
-            img1.line(line, fill = "black", width = 10)
+        for lines in line_points:
+            img1.line(lines, fill = "black", width = 10)
         for i in range(25):
-            img1.text(text_positions[i], bingo_card_items[i]["text"], fill = "black")
+            wrapped = get_wrapped_text(bingo_card_items[i]["text"], max_width = 48, font = font)
+            img1.multiline_text(text_positions[i], wrapped, fill = "black", max_width = 48, max_height = 48)
+
         
         st.image(img, width = 500)
 
