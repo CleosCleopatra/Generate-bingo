@@ -51,7 +51,7 @@ text_positions = []
 
 for x in range(5):
     for y in range(5):
-        text_positions.append((x*500+5+200,y*500+5+200))
+        text_positions.append((x*500+5,y*500+5))
 #text_positions = [(5, 5), (105, 5), (205, 5), (305, 5), (405, 5), (5, 105), (105, 105), (205, 105), (305, 105), (405, 105), (5, 205), (105, 205), (205, 205), (305, 205), (405, 205), (5, 305), (105, 305), (205, 305), (305, 305), (405, 305), (5, 405), (105, 405), (205, 405), (305, 405), (405, 405)]
 
 if st.button("Generate Bingo Card"):
@@ -69,7 +69,7 @@ if st.button("Generate Bingo Card"):
             img1.line(lines, fill = "black", width = 10)
         for i in range(25):
             wrapped, font = get_wrapped_text(bingo_card_items[i]["text"], max_size)
-            img1.multiline_text((text_positions[i][0]+10, text_positions[i][1]+10), wrapped, fill = "black", font = font, align = "center")
+            img1.multiline_text((text_positions[i][0]+10, text_positions[i][1]+10), wrapped, fill = "black", font = font)
 
         
         st.image(img, width = 500)
