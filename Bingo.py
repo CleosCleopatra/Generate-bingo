@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import uuid
 from textwrap import wrap
 
-max_size = 70*5+10
+max_size = 70*5+30
 
 if "possible_text" not in st.session_state:
     st.session_state.possible_text = []
